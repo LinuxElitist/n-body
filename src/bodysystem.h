@@ -14,11 +14,11 @@
 
 #include <algorithm>
 #define NUM_SM 3
-#define BLOCK_SIZE 256
+#define BLOCK_SIZE 32
 #define SHARED_MEM_SIZE_BYTES 65536
 /* coz life :) */
-#define CONCURRENT_BLOCKS 6
-#define NUM_BODIES 4096
+#define CONCURRENT_BLOCKS 8
+#define NUM_BODIES 1024
 #define NUM_ITERS 1
 
 enum NBodyConfig
