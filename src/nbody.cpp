@@ -161,12 +161,14 @@ class NBodyDemo
         static void init(int numBodies, int numDevices, int blockSize,
                          bool usePBO, bool useHostMem, bool useCpu)
         {
-            m_singleton->_init(numBodies, numDevices, blockSize, usePBO, useHostMem, useCpu);
+            //m_singleton->_init(numBodies, numDevices, blockSize, usePBO, useHostMem, useCpu);
+            m_singleton->_init(NUM_BODIES, numDevices, blockSize, usePBO, useHostMem, useCpu);
         }
 
         static void reset(int numBodies, NBodyConfig config)
         {
-            m_singleton->_reset(numBodies, config);
+            //m_singleton->_reset(numBodies, config);
+            m_singleton->_reset(NUM_BODIES, config);
         }
 
         static void selectDemo(int index)
@@ -176,7 +178,8 @@ class NBodyDemo
 
         static bool compareResults(int numBodies)
         {
-            return m_singleton->_compareResults(numBodies);
+            //return m_singleton->_compareResults(numBodies);
+            return m_singleton->_compareResults(NUM_BODIES);
         }
 
         static void runBenchmark(int iterations)
@@ -236,12 +239,14 @@ class NBodyDemo
         {
             if (pos != m_singleton->m_hPos)
             {
-                memcpy(m_singleton->m_hPos, pos, numBodies * 4 * sizeof(T));
+                //memcpy(m_singleton->m_hPos, pos, numBodies * 4 * sizeof(T));
+                memcpy(m_singleton->m_hPos, pos, NUM_BODIES * 4 * sizeof(T));
             }
 
             if (vel != m_singleton->m_hVel)
             {
-                memcpy(m_singleton->m_hVel, vel, numBodies * 4 * sizeof(T));
+                //memcpy(m_singleton->m_hVel, vel, numBodies * 4 * sizeof(T));
+                memcpy(m_singleton->m_hVel, vel, NUM_BODIES * 4 * sizeof(T));
             }
 
             m_singleton->m_nbody->setArray(BODYSYSTEM_POSITION, m_singleton->m_hPos);
@@ -1271,7 +1276,7 @@ main(int argc, char **argv)
 #endif
     else if (numDevsRequested == 1)
     {
-        numBodies = compareToCPU ? 4096 : blockSize*4*props.multiProcessorCount;//NUM_BODIES
+        numBodies = compareToCPU ? 4096 : blockSize*4*NUM_BODIES;//props.multiProcessorCount;//NUM_BODIES
     }
     else
     {
@@ -1281,7 +1286,7 @@ main(int argc, char **argv)
         {
             cudaDeviceProp props;
             checkCudaErrors(cudaGetDeviceProperties(&props, i));
-            numBodies += blockSize*(props.major >= 2 ? 4 : 1)*props.multiProcessorCount;
+            numBodies += blockSize*(props.major >= 2 ? 4 : 1)*NUM_BODIES;//props.multiProcessorCount;
         }
 
     }

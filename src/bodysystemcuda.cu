@@ -156,7 +156,7 @@ computeBodyAccel(typename vec4<T>::Type bodyPos,
         // This is the "tile_calculation" from the GPUG3 article.
 #pragma unroll 128
 
-        for (unsigned int counter = 0; counter < blockDim.x; counter++)
+        for (unsigned int counter = 0; counter < NUM_BODIES; counter++)
         {
             acc = bodyBodyInteraction<T>(acc, bodyPos, positions[counter]);
         }
@@ -203,11 +203,11 @@ integrateBodies(typename vec4<T>::Type *__restrict__ newPos,
 	__syncthreads();*/
 	typename vec3<T>::Type accel = { 0.0f, 0.0f, 0.0f };
 	//typename vec3<T>::Type position = { 0.0f, 0.0f, 0.0f };
-	for (int i = 0; i < NUM_BODIES; i++) {
+	///for (int i = 0; i < blockDim.x; i++) {
 		 accel = computeBodyAccel<T>(sharedPos[index],
 			sharedPos,
 			numTiles);
-	}
+//	}
 	__syncthreads();
 
     // acceleration = force / mass;
